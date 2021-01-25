@@ -48,7 +48,7 @@ export const createGameUI = (
     }
 
     const tableActionRoot = $(`#player-actions-container`)[0];
-	const tableCasesRoot = $(`#player-cases-container`)[0];
+    const tableCasesRoot = $(`#player-cases-container`)[0];
 
     // Create table footer
     const header = createEle('tr', tableActionRoot);
@@ -57,7 +57,7 @@ export const createGameUI = (
     for (let i = 0; i < numberOfColumns; i++) {
         const date = createEle('th', header);
         date.innerHTML = `${months[i].name}<br/>2021`; // Numbered months not named
-		date.setAttribute("id",`month_${i}`);
+        date.setAttribute('id', `month_${i}`);
         date.className = 'noselect';
         date.style.textAlign = 'center';
     }
@@ -124,10 +124,10 @@ export const createGameUI = (
     // Create table footer - current turn
     const tableFooter = createEle('tbody', tableCasesRoot);
     const indicators = [
-		{name:'cases',symbol:'Cases',unit:''},
-		{name:'deaths',symbol:'Deaths',unit:''},
-		{name:'cost',symbol:'Cost',unit:'$'}
-	];
+        { name: 'cases', symbol: 'Cases', unit: '' },
+        { name: 'deaths', symbol: 'Deaths', unit: '' },
+        { name: 'cost', symbol: 'Cost', unit: '$' }
+    ];
 
     // HOF to create the footer rows
     const createMonthlyIndictorCells = (isPreviousGameCell) => (indicator, indicatorNum) => {
@@ -137,37 +137,38 @@ export const createGameUI = (
         }
         for (let i = 0; i < numberOfColumns + 2; i += 1) {
             const id = i > 0 ? `${isPreviousGameCell ? 'last-game-' : ''}month-${indicator.name}-${i}` : undefined;
-			const idMiddle = i > 0 ? `${isPreviousGameCell ? 'last-game-' : ''}middle-${indicator.name}-${i}` : undefined;
-			const footerCell = createEle('td', footerRow, id);	
-			let middleCell;
+            const idMiddle =
+                i > 0 ? `${isPreviousGameCell ? 'last-game-' : ''}middle-${indicator.name}-${i}` : undefined;
+            const footerCell = createEle('td', footerRow, id);
+            let middleCell;
             if (i === 0) {
-				if (indicatorNum === 0) {
-					footerCell.innerHTML = `${isPreviousGameCell ? 'Last trial' : 'This trial'}: ${indicator.symbol}`;
-					footerCell.style.width = '155px';
-				} else {
-					footerCell.innerHTML = `${indicator.symbol}`;
-				}
+                if (indicatorNum === 0) {
+                    footerCell.innerHTML = `${isPreviousGameCell ? 'Last trial' : 'This trial'}: ${indicator.symbol}`;
+                    footerCell.style.width = '155px';
+                } else {
+                    footerCell.innerHTML = `${indicator.symbol}`;
+                }
                 footerCell.className = 'noselect';
                 footerCell.style.textAlign = 'right';
-            } else if(i === numberOfColumns + 1){
-				footerCell.innerHTML = `${indicator.unit} 0` ;
+            } else if (i === numberOfColumns + 1) {
+                footerCell.innerHTML = `${indicator.unit} 0`;
                 footerCell.style.textAlign = 'center';
-				footerCell.style.fontWeight = 'bold';
-				footerCell.style.paddingLeft = '20px';
-				footerCell.style.borderLeft = 'solid 1px #999999';
-				if(isPreviousGameCell){
-					footerCell.setAttribute("id",indicator.name+"_last");
-				} else{
-					footerCell.setAttribute("id",indicator.name+"_this");
-				}
-			} else {
-				footerCell.innerHTML = '-';
+                footerCell.style.fontWeight = 'bold';
+                footerCell.style.paddingLeft = '20px';
+                footerCell.style.borderLeft = 'solid 1px #999999';
+                if (isPreviousGameCell) {
+                    footerCell.setAttribute('id', indicator.name + '_last');
+                } else {
+                    footerCell.setAttribute('id', indicator.name + '_this');
+                }
+            } else {
+                footerCell.innerHTML = '-';
                 footerCell.style.textAlign = 'center';
-				footerCell.style.width = (document.getElementById("month_"+(i-1)).offsetWidth-30)+"px";
-				middleCell = createEle('td', footerRow, idMiddle);
-				middleCell.style.textAlign = 'center';
-				middleCell.style.width = "30px";
-				middleCell.innerHTML = '&nbsp;';
+                footerCell.style.width = document.getElementById('month_' + (i - 1)).offsetWidth - 30 + 'px';
+                middleCell = createEle('td', footerRow, idMiddle);
+                middleCell.style.textAlign = 'center';
+                middleCell.style.width = '30px';
+                middleCell.innerHTML = '&nbsp;';
             }
         }
     };
@@ -185,8 +186,8 @@ export const createGameUI = (
             const btn = createEle('button', btnGrp, `endTurn-btn-${i}`);
             btn.className = `btn btn-sm btn-light turn-btn-grp`;
             btn.style.width = '80px'; // '100%';
-			btn.style.zIndex = '200';
-			btn.style.marginBottom = '30px';
+            btn.style.zIndex = '200';
+            btn.style.marginBottom = '30px';
             btn.name = 'Go forwards in time';
             btn.type = 'button';
             btn.innerHTML = `
@@ -196,12 +197,12 @@ export const createGameUI = (
                 </svg>
             `;
             btn.onclick = onEndTurn; // END TURN EVENT (in GameEngine.ts)
-			createEle('td', footerRow);
+            createEle('td', footerRow);
         } else {
             const btn = createEle('button', btnGrp, `undo-btn`);
             btn.className = `btn btn-sm btn-light undo-btn-grp`;
             btn.style.width = '80px'; // '100%';
-			btn.style.marginBottom = '30px';
+            btn.style.marginBottom = '30px';
             btn.name = 'Go backwards in time';
             btn.type = 'button';
             btn.innerHTML = `
@@ -213,10 +214,8 @@ export const createGameUI = (
             btn.onclick = onUndo; // UNDO EVENT (in GameEngine.ts)
         }
     }
-	
-	
-	
-	// Create monthly indicator cells for current playthough
+
+    // Create monthly indicator cells for current playthough
     indicators.forEach(createMonthlyIndictorCells(false));
 
     // Create monthly indicator cells for next playthroug
